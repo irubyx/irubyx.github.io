@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<!--
+	Solid State by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>CDK Dataset</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="index.html">Portfolio Sebastián Fripp</a></h1>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<div class="inner">
+							<h2>Menu</h2>
+							<ul class="links">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="theoreticalFramework.html">Theoretical Framework</a></li>
+								<li><a href="studyCases.html">Study Cases</a></li>
+								<li><a href="aboutMe.html">About Me</a></li>
+							</ul>
+							<a href="#" class="close">Close</a>
+						</div>
+					</nav>
+
+				<!-- Wrapper -->
+					<section id="wrapper">
+						<header>
+							<div class="inner">
+								<h2>Study Case: CDK</h2>
+								<p>Dataset analysis of CDK dataset.</p>
+							</div>
+						</header>
+
+						<!-- Content -->
+							<div class="wrapper">
+								<div class="inner">
+
+									<h3 class="major">Context</h3>
+									<p>Approximately 10% of the world's population has some degree of kidney disease; Unfortunately, it goes unnoticed because its symptoms appear very late. Its main risk factors for developing it, such as high blood pressure, diabetes, obesity, family history of kidney disease and age over 60 years, are very prevalent globally.</p>
+									<p>Due to their high cost, kidney failure replacement therapies, such as dialysis and kidney transplantation, are inaccessible to the majority of the population, especially in developing countries. Hence the importance of detecting kidney disease in a timely manner and establishing therapeutic measures to slow its progression.</p>	
+									<p>Kidney disease can be prevented if it is detected early. A blood creatinine test as well as a urine protein test are sufficient to detect its presence. The application of measures such as good control of blood pressure, blood glucose, maintaining an ideal weight, as well as the use of medications that protect kidney function, can slow the deterioration of kidney function and thus prevent or delay the need for dialysis and transplant.</p>
+									<p>To achieve the above, it is necessary to raise awareness and educate the general population, including health professionals, about the necessary measures to promptly detect and treat kidney disease.</p>
+
+									<h3 class="major">Business Challenge</h3>
+									<p>The objective of this dataset is to predict whether or not a person has a Critical Kidney Disease (CDK).</p>
+
+									<h3 class="major">Data Preparation</h3>
+									
+									<h4>Missing Values</h4>
+									<p>Something to take into account in this dataset is the large number of missing attributes. For this, a “Declare missing Value” operator is used to mark the “?” as missing values and games replace them with the average using the “Replace Missing Values” operator. In fact, it would be better to use another more appropriate way to replace missing values, for example one in which the distribution of the data is not affected.</p>
+
+									<h4>Analysis of Examples</h4>
+									<p>Due to the lack of knowledge on the subject and the non-possibility of creating a correlation matrix, it is not possible to state whether one attribute has more relevance than another on the target variable. It would be appropriate to have experts on the subject to endorse the decisions.</p>
+
+									<h4>Outliers</h4>
+									<p>Moving on to the outliers, there is not much information about how these affect the target variable, for example, a sample with a too high value of “white blood cell count” could be taken as an outlier. However, a priori we will not eliminate said outlier since this case could be significant for the presence of CKD. So, as a first instance of modeling, no outlier treatment will be done; in case the performance is not adequate, some type of treatment will be considered.</p>
+
+									<h4>Biases</h4>
+									<p>The only cases in which a normal distribution is needed are those of numerical values when modeling with the Naive-Bayes algorithm. There are some cases of attributes with slightly “strange” distributions, for example serum creatinine, in which the vast majority of samples are limited to a certain range except for a couple that could be considered anomalies. Despite this, no normalizations will be carried out so as not to affect the impact of these values on the predictions.</p>
+
+									<h3 class="major">Modeling</h3>
+									<p>Since we are dealing with a classification problem in which the target variable is binomial (cdk or not cdk), we will try to run the model with three algorithms. </p>
+									<p>The first task to perform within Rapid Miner will be to import the dataset and mark our target variable using the Set Role operator. After that, the Declare Missing Value operator is applied to declare some fields as missing values. Following that, the Replace Missing Values operator is applied to replace the missing values with the average of each attribute. After that, a Remove Unused Values operator is used to remove the possibility of some attributes to have a "?" value.</p>
+									<p>Once the dataset has been correctly prepared, the different classification algorithms will begin to be applied to evaluate which one gives the best results. For this, the Multiply operator is used to multiply the dataset by 3 and thus be able to apply Logistic Regression, Naive Bayes and KNN. To apply each of them, the Cross Validation operator is used to divide our dataset into a training part and a testing part.</p>
+									<p>The Rapid Miner process should look something like this:</p>
+									<img src="./images/cdk_rapidminer.jpg" class="images">
+
+									<p>Within each Cross Validation there is the algorithm to use and the Performance operator, to evaluate the performance of each of them. Below you can see the configuration of each Cross Validation and the result of each algorithm.</p>
+									<h4>Logistic Regression</h4>
+									<img src="./images/cdk_lr.jpg" class="images">
+									<img src="./images/cdk_lr_perf.jpg" class="images">
+
+									<h4>Naive Bayes</h4>
+									<img src="./images/ckd_naive.jpg" class="images">
+									<img src="./images/ckd_naive_perf.jpg" class="images">
+
+									<h4>kNN</h4>
+									<img src="./images/cdk_knn.jpg" class="images">
+									<img src="./images/cdk_knn_perf.jpg" class="images">
+
+									<h3 class="major">Results</h3>
+									<p>As can be seen, all the algorithms obtained a fairly high result (close to 100%), so in a context where the operation of the model must be as perfect as possible since we are trying to determine if a person Whether or not you have kidney disease, this percentage can be accepted.</p>
+
+								</div>
+							</div>
+
+					</section>
+
+				<!-- Footer -->
+					<section id="footer">
+						<div class="inner">
+							<ul class="copyright">
+								<li>&copy; Untitled Inc. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
