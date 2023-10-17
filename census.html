@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<!--
+	Solid State by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Census Dataset</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="index.html">Portfolio Sebastián Fripp</a></h1>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<div class="inner">
+							<h2>Menu</h2>
+							<ul class="links">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="theoreticalFramework.html">Theoretical Framework</a></li>
+								<li><a href="studyCases.html">Study Cases</a></li>
+
+								<li><a href="aboutMe.html">About Me</a></li>
+							</ul>
+							<a href="#" class="close">Close</a>
+						</div>
+					</nav>
+
+				<!-- Wrapper -->
+					<section id="wrapper">
+						<header>
+							<div class="inner">
+								<h2>Study Case: Census</h2>
+								<p>Dataset analysis of a census made in 1994.</p>
+							</div>
+						</header>
+
+						<!-- Content -->
+							<div class="wrapper">
+								<div class="inner">
+
+									<h3 class="major">Context</h3>
+									<p>The 1994 United States census data set, compiled by Barry Becker, is a valuable source of information for analyzing the demographics and economy of that period in the country. This dataset includes a wide variety of individual characteristics, such as age, gender, educational level, occupation, marital status, and more.</p>
+
+									<h3 class="major">Business Challenge</h3>
+									<p>The objective of this dataset is to predict whether or not a person earned more than $50,000 in 1994, based on some attributes of the person such as: their level of education, their job, age, among others.</p>
+
+									<h3 class="major">Data Preparation</h3>
+									<p>In this study case, I used the Census Income dataset that is available in UCI repository. It has 32000 rows of data.</p>
+									<p>You can find the dataset in this <a href="https://archive.ics.uci.edu/dataset/20/census+income">link</a>.</p>
+									
+									<h4>Analysis of Attributes</h4>
+									<p>This dataset has 14 predictor variables, plus 1 target variable, which is the one you want to predict. Of these 14 variables, 6 are numerical and the rest are categorical (including the target variable).</p>
+									<p>The variables contained in the dataset are the following:</p>
+
+									<ul>
+										<li>Age: Age of the person</li>
+										<li>Workclass: Represents the employment state of the individual.</li>
+										<li>Fnlwgt: Final weight. In other words, this is the number of people the census believes the entry represents.</li>
+										<li>Education: Maximum education achieved by the person</li>
+										<li>Education-num: The highest level of education achieved in numerical form.</li>
+										<li>Marital-status: Represents what this individual is relative to others.</li>
+										<li>Occupation: The general type of occupation of an individual.</li>
+										<li>Relationship: Represents what this individual is relative to others.</li>
+										<li>Race: Description of an individuals race.</li>
+										<li>Sex: The biological sex of the individual.</li>
+										<li>Capital-gain: Capital gains for an individual.</li>
+										<li>Capital-loss: Capital loss for an individual.</li>
+										<li>Hours-per-week: The hours an individual has reported to work per week.</li>
+										<li>Native-country: Country of origin for an individual.</li>
+										<li>Income: It is the objective variable, whether he made or not 50k dollars or more in the entire year. (<=50K, >50K)</li>
+									</ul>
+									
+									<h4>Missing Values</h4>
+									<p>There are 2399 rows that contain missing data, in the occupation, workclass and native-country attributes. In the first instance, it was decided to exclude these rows to carry out a first evaluation and then compare by replacing the missing values with the most common one in the dataset, to see which is more effective.</p>
+
+									<h4>Analysis of Examples</h4>
+									<p>From this set of variables, you can choose whether to discard education or education-num, since both represent the same thing, the maximum study achieved by a person. In this case, I discarded education, since education-num allows us to quickly know if an individual has a higher level of education than another, due to the numerical order that is generated.</p>
+
+									<h4>Correlation</h4>
+									<p>Looking at the correlation matrix, we can see that income and fnlwgt have a very low correlation, so we can exclude this variable from the model. On the other hand, we see that education and income are decently correlated so we can assume that it will have a great impact when it comes to prediction.</p>
+									<img src="./images/census_corr.jpg" class="images">
+
+									<h4>Outliers</h4>
+									<p>There are some cases of outliers, particularly in the "capital-gain" attribute where you can find 40 cases where your profit is between 90k and 100k dollars, while in the majority of cases they are between 0 and 20k dollars. These 40 cases were discarded for the analysis of this dataset.</p>
+
+									<h4>Biases</h4>
+									<p>Viewing the graphs of some of the attributes we can notice that the vast majority of those interviewed in the census were private workers (6816).</p>
+									<img src="./images/biases_census_1.jpg" class="images">
+									<p>And in the case of education, all the data is concentrated in the values from 8 to 12, which refers to people who have completed secondary school.</p>
+									<img src="./images/biases_census_2.jpg" class="images">
+
+									<h3 class="major">Modeling</h3>
+									<p>In deciding which models to develop or algorithms to use, it is essential to consider the type of problem, which in this case consists of predicting if the salary of a person is greater or not than 50K dollars, from a set of predictors and therefore it is a supervised one and classification. There is a set of algorithms that can be used in these conditions, in this case I decided to use Naive Bayes approach.</p>
+									<p>The first task to perform within Rapid Miner will be to import the dataset and mark our target variable using the Set Role operator. After that, the Filter Examples operator is applied to remove the attributes that were equal to "?". Following that, the Select Attributes operator is applied to remove education and fnlwgt attributes from the dataset.</p>
+									<p>Once the dataset has been correctly prepared, Naive Bayes will begin to be applied and evaluated to see the performance. For this, the Split Data operator is used to split the dataset in two parts, one for training and another one for testing. Once the dataset is splitted, we can apply Naive Bayes, and use the Performance operator to evaluate how well our model predicted.</p>
+									<p>The Rapid Miner process should look something like this:</p>
+									<img src="./images/census_rapidminer.jpg" class="images">
+
+									<h3 class="major">Results</h3>
+									<p>As can be seen, the model had a 82.26% accuracy, which is a very good result for the context of the dataset. It could be better, perhaps using Cross Validation and see if it changes the result. Also test if other algorithms would have done better than Naive Bayes did. But as I mentioned before, 82.26% is a very good result for predicting if a person made or not 50k dollars in the entire year.</p>
+									<img src="./images/census_perf.jpg" class="images">
+
+								</div>
+							</div>
+
+					</section>
+
+				<!-- Footer -->
+					<section id="footer">
+						<div class="inner">
+							<ul class="copyright">
+								<li>&copy; Untitled Inc. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
